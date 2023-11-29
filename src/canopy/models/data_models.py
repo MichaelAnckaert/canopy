@@ -21,12 +21,10 @@ class Query(BaseModel):
         description="A Pinecone metadata filter, to learn more about metadata filters, see https://docs.pinecone.io/docs/metadata-filtering",  # noqa: E501
     )
     top_k: Optional[int] = Field(
-        default=None,
-        description="The number of results to return."
+        default=None, description="The number of results to return."
     )
     query_params: dict = Field(
-        default_factory=dict,
-        description="Pinecone Client additional query parameters."
+        default_factory=dict, description="Pinecone Client additional query parameters."
     )
 
 
@@ -34,8 +32,7 @@ class Document(BaseModel):
     id: str = Field(description="The document id.")
     text: str = Field(description="The document text.")
     source: str = Field(
-        default="",
-        description="The source of the document: a URL, a file path, etc."
+        default="", description="The source of the document: a URL, a file path, etc."
     )
     metadata: Metadata = Field(
         default_factory=dict,
@@ -83,11 +80,14 @@ class Role(Enum):
     USER = "user"
     SYSTEM = "system"
     ASSISTANT = "assistant"
+    FUNCTION = "function"
 
 
 class MessageBase(BaseModel):
-    role: Role = Field(description="The role of the message's author. "
-                                   "Can be one of ['User', 'Assistant', 'System']")
+    role: Role = Field(
+        description="The role of the message's author. "
+        "Can be one of ['User', 'Assistant', 'System']"
+    )
     content: str = Field(description="The contents of the message.")
 
     def dict(self, *args, **kwargs):
@@ -104,6 +104,12 @@ class UserMessage(MessageBase):
     content: str
 
 
+class FunctionMessage(MessageBase):
+    role: Literal[Role.FUNCTION] = Role.FUNCTION
+    name: str
+    content: str
+
+
 class SystemMessage(MessageBase):
     role: Literal[Role.SYSTEM] = Role.SYSTEM
     content: str
@@ -111,4 +117,5 @@ class SystemMessage(MessageBase):
 
 class AssistantMessage(MessageBase):
     role: Literal[Role.ASSISTANT] = Role.ASSISTANT
+    function_call: dict
     content: str

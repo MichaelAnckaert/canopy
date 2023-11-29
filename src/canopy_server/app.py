@@ -45,6 +45,7 @@ from .models.v1.api_models import (
 )
 
 from canopy.llm.openai import OpenAILLM, AzureOpenAILLM
+from canopy.llm.dewaele import DewaeleLLM
 from canopy_cli.errors import ConfigError
 from canopy import __version__
 
