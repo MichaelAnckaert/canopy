@@ -62,7 +62,7 @@ class DewaeleLLM(AzureOpenAILLM):
                 ChatCompletionToolParam,
                 Function(
                     name="iam_calendar",
-                    description="Get information from the Calendar of the current user",
+                    description="Haal informatie en afspraken uit de agenda van de huidige gebruiker.",
                     parameters=FunctionParameters(
                         required_properties=[],
                         optional_properties=[],
@@ -73,7 +73,7 @@ class DewaeleLLM(AzureOpenAILLM):
                 ChatCompletionToolParam,
                 Function(
                     name="iam_properties",
-                    description="Get information about properties in the Dewaele portfolio",
+                    description="Zoek naar panden in IAM op basis van sleutelwoorden.",
                     parameters=FunctionParameters(
                         required_properties=[],
                         optional_properties=[
